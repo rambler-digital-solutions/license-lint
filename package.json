@@ -1,0 +1,42 @@
+{
+  "name": "license-lint",
+  "version": "0.0.0",
+  "description": "Lint NPM package licenses",
+  "bin": "dist/cli.mjs",
+  "author": "Andrey Polischuk <me@andrepolischuk.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rambler-digital-solutions/license-lint.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint '*.js' 'src/**/*.mts'",
+    "format": "prettier --write *.js src/**/*.mts && eslint '*.js' 'src/**/*.mts' --fix",
+    "typecheck": "tsc --noEmit",
+    "release": "semantic-release",
+    "prepare": "[ -n \"$CI\" ] && exit 0 || husky install"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "license-checker": "^25.0.1",
+    "meow": "^11.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.1",
+    "@commitlint/config-conventional": "^17.4.0",
+    "@types/license-checker": "^25.0.3",
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.2",
+    "semantic-release": "19",
+    "typescript": "^4.9.4"
+  }
+}

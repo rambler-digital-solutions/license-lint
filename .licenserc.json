@@ -1,0 +1,7 @@
+{
+  "production": true,
+  "deny": [
+    "GPL",
+    "LGPL"
+  ]
+}
