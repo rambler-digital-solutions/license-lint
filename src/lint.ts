@@ -10,9 +10,12 @@ export interface LicenseResult extends Omit<ModuleInfo, 'licenses'> {
 const matchLicense = (license: string) => (reference: string) =>
   license.match(new RegExp(reference, 'i'))
 
-export const lint = (options: Options): Promise<LicenseResult[]> =>
+export const lint = (
+  entry: string,
+  options: Options
+): Promise<LicenseResult[]> =>
   new Promise<LicenseResult[]>((resolve, reject) => {
-    const {entry, production, development, deny = [], allow = []} = options
+    const {production, development, deny = [], allow = []} = options
 
     const checkerOptions: InitOpts = {
       start: entry,

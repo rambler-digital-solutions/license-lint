@@ -1,0 +1,4 @@
+{
+  "extends": "./options.json",
+  "production": true
+}
