@@ -2,6 +2,8 @@
 
 Lint NPM package licenses
 
+![](./screenshot.png)
+
 ## Install
 
 ```sh
