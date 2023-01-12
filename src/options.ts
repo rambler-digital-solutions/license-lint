@@ -1,4 +1,7 @@
 import path from 'path'
+import createDebug from 'debug'
+
+const debug = createDebug('license-lint:options')
 
 export interface Options {
   extends?: string
@@ -18,19 +21,24 @@ export const defaultOptions: Partial<Options> = {
 const defaultOptionsFileName = '.licenserc.json'
 
 export const loadOptions = async (
-  optionsFileName = defaultOptionsFileName
+  optionsFileName = defaultOptionsFileName,
+  optionsFileDir = process.cwd()
 ): Promise<Partial<Options>> => {
   try {
-    const optionsFilePath = path.resolve(process.cwd(), optionsFileName)
+    const optionsFilePath = optionsFileName.endsWith('.json')
+      ? path.resolve(optionsFileDir, optionsFileName)
+      : optionsFileName
+
+    debug('optionsFileName: %o', optionsFileName)
+    debug('optionsFilePath: %o', optionsFilePath)
+
     const {default: options} = await import(optionsFilePath)
     const {extends: extendsFileName, ...restOptions} = options
     let extendsOptions = {}
 
-    if (options.extends) {
-      const optionsFileDir = path.dirname(optionsFilePath)
-      extendsOptions = await loadOptions(
-        path.resolve(optionsFileDir, extendsFileName)
-      )
+    if (extendsFileName) {
+      const extendsFileDir = path.dirname(optionsFilePath)
+      extendsOptions = await loadOptions(extendsFileName, extendsFileDir)
     }
 
     const resultOptions = {...defaultOptions, ...extendsOptions, ...restOptions}
