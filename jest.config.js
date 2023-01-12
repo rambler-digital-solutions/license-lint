@@ -3,7 +3,7 @@
  **/
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   moduleDirectories: ['src', 'node_modules'],
   collectCoverage: true,
   coverageReporters: ['text']
