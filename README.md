@@ -7,24 +7,24 @@ Lint NPM package licenses
 ## Install
 
 ```sh
-npm install -D license-lint
+npm install -D @rambler-digital-solutions/licenselint
 ```
 
 or 
 
 ```sh
-yarn add -D license-lint
+yarn add -D @rambler-digital-solutions/licenselint
 ```
 
 ## Usage
 
 ```sh
-license-lint --help
+licenselint --help
 
   Lint NPM package licenses
 
   Usage
-    license-lint [dirname]
+    licenselint [dirname]
 
   Options
     --production    Only lint production dependencies
@@ -35,12 +35,12 @@ license-lint --help
     --extends       Use custom configuration file
 
   Examples
-    license-lint
-    license-lint packages/foo
-    license-lint --production
-    license-lint --deny LGPL
-    license-lint --allow MIT --allow ISC
-    license-lint --extends shared/licenserc.json
+    licenselint
+    licenselint packages/foo
+    licenselint --production
+    licenselint --deny LGPL
+    licenselint --allow MIT --allow ISC
+    licenselint --extends shared/licenserc.json
 ```
 
 ## Configuration

@@ -5,14 +5,14 @@ import {lint} from './lint'
 import {format} from './format'
 import {loadOptions, Options} from './options'
 
-const debug = createDebug('license-lint')
+const debug = createDebug('licenselint')
 
 const defaultArray: string[] = []
 
 const cli = meow<any>(
   `
   Usage
-    license-lint [dirname]
+    licenselint [dirname]
 
   Options
     --production    Only lint production dependencies
@@ -23,12 +23,12 @@ const cli = meow<any>(
     --extends       Use custom configuration file
 
   Examples
-    license-lint
-    license-lint packages/foo
-    license-lint --production
-    license-lint --deny LGPL
-    license-lint --allow MIT --allow ISC
-    license-lint --extends shared/licenserc.json
+    licenselint
+    licenselint packages/foo
+    licenselint --production
+    licenselint --deny LGPL
+    licenselint --allow MIT --allow ISC
+    licenselint --extends shared/licenserc.json
 `,
   {
     booleanDefault: undefined,

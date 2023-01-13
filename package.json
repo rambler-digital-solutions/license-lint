@@ -1,12 +1,14 @@
 {
-  "name": "license-lint",
+  "name": "@rambler-digital-solutions/licenselint",
   "version": "0.0.0",
   "description": "Lint NPM package licenses",
-  "bin": "dist/cli.js",
+  "bin": {
+    "licenselint": "dist/cli.js"
+  },
   "author": "Andrey Polischuk <me@andrepolischuk.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rambler-digital-solutions/license-lint.git"
+    "url": "git+https://github.com/rambler-digital-solutions/licenselint.git"
   },
   "license": "MIT",
   "scripts": {
