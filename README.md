@@ -29,8 +29,9 @@ license-lint --help
   Options
     --production    Only lint production dependencies
     --development   Only lint development dependencies
-    --deny          Fail on the first occurrence of the licenses of the deny list
-    --allow         Fail on the first occurrence of the licenses not in the allow list
+    --summary       Output a summary of the license usage
+    --deny          Fail on an occurrence of the licenses of the deny list
+    --allow         Fail on an occurrence of the licenses not in the allow list
     --extends       Use custom configuration file
 
   Examples
@@ -63,7 +64,7 @@ Also you can extends your local setup with shared configuration:
 ```json
 {
   "extends": "@shared/licenserc",
-  "production": true
+  "summary": true
 }
 ```
 

@@ -17,8 +17,9 @@ const cli = meow<any>(
   Options
     --production    Only lint production dependencies
     --development   Only lint development dependencies
-    --deny          Fail on the first occurrence of the licenses of the deny list
-    --allow         Fail on the first occurrence of the licenses not in the allow list
+    --summary       Output a summary of the license usage
+    --deny          Fail on an occurrence of the licenses of the deny list
+    --allow         Fail on an occurrence of the licenses not in the allow list
     --extends       Use custom configuration file
 
   Examples
@@ -36,6 +37,9 @@ const cli = meow<any>(
         type: 'boolean'
       },
       development: {
+        type: 'boolean'
+      },
+      summary: {
         type: 'boolean'
       },
       extends: {
@@ -70,13 +74,14 @@ loadOptions(cliOptions.extends)
 
     return options
   })
-  .then((options) => lint(entry, options))
-  .then((results) => {
-    const errors = results.filter((result) => result.error)
+  .then((options) =>
+    lint(entry, options).then((results) => {
+      const errors = results.filter((result) => result.error)
 
-    console.log(format(results))
-    process.exit(errors.length > 0 ? 1 : 0)
-  })
+      console.log(format(results, options))
+      process.exit(errors.length > 0 ? 1 : 0)
+    })
+  )
   .catch((error) => {
     console.error(error)
     process.exit(1)
