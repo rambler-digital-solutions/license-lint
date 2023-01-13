@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import pluralize from 'numd'
 import logSymbols from 'log-symbols'
 import stringWidth from 'string-width'
+import {Options} from './options'
 import {LicenseResult} from './lint'
 
 export interface FormatLine {
@@ -12,7 +13,7 @@ export interface FormatLine {
   error?: string
 }
 
-const formatLines = (
+const formatFullLines = (
   lines: FormatLine[],
   maxNameWidth: number,
   maxLicenseWidth: number
@@ -30,7 +31,34 @@ const formatLines = (
     )
     .join('\n')
 
-export const format = (results: LicenseResult[]): string => {
+const formatSummaryLines = (
+  lines: FormatLine[],
+  _maxNameWidth: number,
+  maxLicenseWidth: number
+): string => {
+  const summaryLines: Record<string, FormatLine[]> = {}
+
+  lines.forEach((line) => {
+    summaryLines[line.license] ??= []
+    summaryLines[line.license].push(line)
+  })
+
+  const output = Object.values(summaryLines)
+    .sort((a, b) => b.length - a.length)
+    .map((line) =>
+      [
+        '',
+        logSymbols['success'],
+        line[0].license + ' '.repeat(maxLicenseWidth - line[0].licenseWidth),
+        chalk.dim(line.length)
+      ].join('  ')
+    )
+    .join('\n')
+
+  return output
+}
+
+export const format = (results: LicenseResult[], options: Options): string => {
   const errorLines: FormatLine[] = []
   const successLines: FormatLine[] = []
   let maxNameWidth = 0
@@ -54,6 +82,8 @@ export const format = (results: LicenseResult[]): string => {
     })
   })
 
+  const formatLines = options.summary ? formatSummaryLines : formatFullLines
+
   let output = '\n'
   output += formatLines(successLines, maxNameWidth, maxLicenseWidth)
   output += '\n'
@@ -63,7 +93,7 @@ export const format = (results: LicenseResult[]): string => {
       '\n  ' +
       chalk.red(pluralize(errorLines.length, 'error', 'errors')) +
       '\n\n'
-    output += formatLines(errorLines, maxNameWidth, maxLicenseWidth)
+    output += formatFullLines(errorLines, maxNameWidth, maxLicenseWidth)
     output += '\n'
   }
 

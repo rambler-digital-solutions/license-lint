@@ -1,12 +1,10 @@
 import path from 'path'
-import createDebug from 'debug'
-
-const debug = createDebug('license-lint:options')
 
 export interface Options {
   extends?: string
   production?: boolean
   development?: boolean
+  summary?: boolean
   deny?: string[]
   allow?: string[]
 }
@@ -14,6 +12,7 @@ export interface Options {
 export const defaultOptions: Partial<Options> = {
   production: false,
   development: false,
+  summary: false,
   deny: [],
   allow: []
 }
@@ -28,9 +27,6 @@ export const loadOptions = async (
     const optionsFilePath = optionsFileName.endsWith('.json')
       ? path.resolve(optionsFileDir, optionsFileName)
       : optionsFileName
-
-    debug('optionsFileName: %o', optionsFileName)
-    debug('optionsFilePath: %o', optionsFilePath)
 
     const {default: options} = await import(optionsFilePath)
     const {extends: extendsFileName, ...restOptions} = options

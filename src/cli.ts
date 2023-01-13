@@ -5,29 +5,30 @@ import {lint} from './lint'
 import {format} from './format'
 import {loadOptions, Options} from './options'
 
-const debug = createDebug('license-lint')
+const debug = createDebug('licenselint')
 
 const defaultArray: string[] = []
 
 const cli = meow<any>(
   `
   Usage
-    license-lint [dirname]
+    licenselint [dirname]
 
   Options
     --production    Only lint production dependencies
     --development   Only lint development dependencies
-    --deny          Fail on the first occurrence of the licenses of the deny list
-    --allow         Fail on the first occurrence of the licenses not in the allow list
+    --summary       Output a summary of the license usage
+    --deny          Fail on an occurrence of the licenses of the deny list
+    --allow         Fail on an occurrence of the licenses not in the allow list
     --extends       Use custom configuration file
 
   Examples
-    license-lint
-    license-lint packages/foo
-    license-lint --production
-    license-lint --deny LGPL
-    license-lint --allow MIT --allow ISC
-    license-lint --extends shared/licenserc.json
+    licenselint
+    licenselint packages/foo
+    licenselint --production
+    licenselint --deny LGPL
+    licenselint --allow MIT --allow ISC
+    licenselint --extends shared/licenserc.json
 `,
   {
     booleanDefault: undefined,
@@ -36,6 +37,9 @@ const cli = meow<any>(
         type: 'boolean'
       },
       development: {
+        type: 'boolean'
+      },
+      summary: {
         type: 'boolean'
       },
       extends: {
@@ -70,13 +74,14 @@ loadOptions(cliOptions.extends)
 
     return options
   })
-  .then((options) => lint(entry, options))
-  .then((results) => {
-    const errors = results.filter((result) => result.error)
+  .then((options) =>
+    lint(entry, options).then((results) => {
+      const errors = results.filter((result) => result.error)
 
-    console.log(format(results))
-    process.exit(errors.length > 0 ? 1 : 0)
-  })
+      console.log(format(results, options))
+      process.exit(errors.length > 0 ? 1 : 0)
+    })
+  )
   .catch((error) => {
     console.error(error)
     process.exit(1)
