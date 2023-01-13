@@ -1,6 +1,6 @@
 # License Lint
 
-Lint NPM package licenses
+A linter for NPM package licenses to avoid dependencies that not compatible with license of your software. It can check licenses automatically on CI or on NPM `postinstall`.
 
 ![](./screenshot.png)
 

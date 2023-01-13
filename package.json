@@ -1,7 +1,7 @@
 {
   "name": "@rambler-digital-solutions/licenselint",
   "version": "0.0.0",
-  "description": "Lint NPM package licenses",
+  "description": "A linter for NPM package licenses to avoid dependencies that not compatible with license of your software",
   "bin": {
     "licenselint": "dist/cli.js"
   },
