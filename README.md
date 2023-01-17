@@ -43,6 +43,33 @@ licenselint --help
     licenselint --extends shared/licenserc.json
 ```
 
+Then use it for automatically check in CI
+
+```yaml
+...
+lint deps:
+  stage: test
+  script:
+    - npm install
+    - licenselint
+...
+```
+
+Or on NPM `postinstall`
+
+```json
+{
+  "name": "app",
+  "description": "...",
+  "version": "0.1.2",
+  "scripts": {
+    "...": "...",
+    "postinstall": "licenselint"
+  },
+  "...": "..."
+}
+```
+
 ## Configuration
 
 Create `.licenserc.json` configuration file:
