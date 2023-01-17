@@ -63,13 +63,20 @@ export const format = (results: LicenseResult[], options: Options): string => {
   const successLines: FormatLine[] = []
   let maxNameWidth = 0
   let maxLicenseWidth = 0
+  let maxErrorNameWidth = 0
+  let maxErrorLicenseWidth = 0
 
   results.forEach((result) => {
     const nameWidth = stringWidth(result.name)
     const licenseWidth = stringWidth(result.licenses ?? '')
 
-    maxNameWidth = Math.max(nameWidth, maxNameWidth)
-    maxLicenseWidth = Math.max(licenseWidth, maxLicenseWidth)
+    if (result.error && options.summary) {
+      maxErrorNameWidth = Math.max(nameWidth, maxErrorNameWidth)
+      maxErrorLicenseWidth = Math.max(licenseWidth, maxErrorLicenseWidth)
+    } else {
+      maxNameWidth = Math.max(nameWidth, maxNameWidth)
+      maxLicenseWidth = Math.max(licenseWidth, maxLicenseWidth)
+    }
 
     const lines = result.error ? errorLines : successLines
 
@@ -93,7 +100,11 @@ export const format = (results: LicenseResult[], options: Options): string => {
       '\n  ' +
       chalk.red(pluralize(errorLines.length, 'error', 'errors')) +
       '\n\n'
-    output += formatFullLines(errorLines, maxNameWidth, maxLicenseWidth)
+    output += formatFullLines(
+      errorLines,
+      maxErrorNameWidth || maxNameWidth,
+      maxErrorLicenseWidth || maxLicenseWidth
+    )
     output += '\n'
   }
 
