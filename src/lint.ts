@@ -30,7 +30,13 @@ export const lint = (
       }
 
       const results = Object.entries(modulesInfo)
-        .map(([name, info]) => ({name, ...info} as LicenseResult))
+        .map<LicenseResult>(([name, {licenses, ...info}]) => ({
+          name,
+          ...info,
+          licenses: Array.isArray(licenses)
+            ? `(${licenses.join(' AND ')})`
+            : licenses
+        }))
         .map((result) => {
           if (allow.length > 0) {
             const isNotAllow = !allow.some(matchLicense(result.licenses ?? ''))
