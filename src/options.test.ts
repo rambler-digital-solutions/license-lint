@@ -4,8 +4,8 @@ test('load default options', async () => {
   const options = await loadOptions()
   expect(options).toEqual({
     ...defaultOptions,
-    production: true,
-    deny: ['GPL', 'LGPL']
+    summary: true,
+    deny: ['GPL', 'LGPL', 'MPL', 'UNKNOWN', 'CUSTOM']
   })
 })
 
