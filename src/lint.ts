@@ -44,19 +44,12 @@ export const lint = (
               result.error = `${result.licenses} is not allowed by \`allow\` list`
             }
           } else if (deny.length > 0) {
-            let isDeny: boolean
-            const hasMultipleLicenses = result.licenses?.includes('OR')
-            if (hasMultipleLicenses && result.licenses) {
-              const multipleLicenses = result.licenses.split('OR')
-              isDeny = multipleLicenses.reduce<boolean>(
-                (acc, multipleLicense) =>
-                  acc && deny.some(matchLicense(multipleLicense ?? '')),
-                true
-              )
-            } else {
-              isDeny = deny.some(matchLicense(result.licenses ?? ''))
-            }
-
+            const multipleLicenses = result.licenses?.split(' OR ')
+            const isDeny = Array.isArray(multipleLicenses)
+              ? multipleLicenses.every((license) =>
+                  deny.some(matchLicense(license ?? ''))
+                )
+              : deny.some(matchLicense(result.licenses ?? ''))
             if (isDeny) {
               result.error = `${result.licenses} is denied by \`deny\` list`
             }
