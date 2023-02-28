@@ -5,7 +5,17 @@ test('load default options', async () => {
   expect(options).toEqual({
     ...defaultOptions,
     summary: true,
-    deny: ['GPL', 'LGPL', 'MPL', 'UNKNOWN', 'CUSTOM']
+    deny: [
+      'MPL.+2',
+      'EPL.+2',
+      'IPL.+1',
+      'GPL.+2',
+      'GPL.+3',
+      'AGPL.+3',
+      'LGPL.+2.1',
+      'UNKNOWN',
+      'CUSTOM'
+    ]
   })
 })
 
