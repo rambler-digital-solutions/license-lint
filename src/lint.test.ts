@@ -36,3 +36,12 @@ test('lint licenses with allow list', async () => {
   expect(errors.map((result) => result.licenses)).not.toContain('MIT')
   expect(errors.map((result) => result.licenses)).not.toContain('ISC')
 })
+
+test('lint licenses with exclude list', async () => {
+  const options = {
+    production: true,
+    exclude: ['Apache-2.0']
+  }
+  const results = await lint(entry, options)
+  expect(results.map((result) => result.licenses)).not.toContain('Apache-2.0')
+})
