@@ -15,12 +15,20 @@ export const lint = (
   options: Options
 ): Promise<LicenseResult[]> =>
   new Promise<LicenseResult[]>((resolve, reject) => {
-    const {production, development, deny = [], allow = []} = options
+    const {
+      production,
+      development,
+      deny = [],
+      allow = [],
+      exclude = []
+    } = options
 
     const checkerOptions: InitOpts = {
       start: entry,
       production,
-      development
+      development,
+      // NOTE fix wrong `exclude` type
+      exclude: exclude.toString() as unknown as string[]
     }
 
     licenseChecker.init(checkerOptions, (error: Error, modulesInfo) => {

@@ -7,6 +7,7 @@ export interface Options {
   summary?: boolean
   deny?: string[]
   allow?: string[]
+  exclude?: string[]
 }
 
 export const defaultOptions: Partial<Options> = {
@@ -14,7 +15,8 @@ export const defaultOptions: Partial<Options> = {
   development: false,
   summary: false,
   deny: [],
-  allow: []
+  allow: [],
+  exclude: []
 }
 
 const defaultOptionsFileName = '.licenserc.json'

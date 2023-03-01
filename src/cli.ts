@@ -20,6 +20,7 @@ const cli = meow<any>(
     --summary       Output a summary of the license usage
     --deny          Fail on an occurrence of the licenses of the deny list
     --allow         Fail on an occurrence of the licenses not in the allow list
+    --exclude       Exclude modules which licenses are in the list
     --extends       Use custom configuration file
 
   Examples
@@ -51,6 +52,11 @@ const cli = meow<any>(
         isMultiple: true
       },
       allow: {
+        type: 'string',
+        default: defaultArray,
+        isMultiple: true
+      },
+      exclude: {
         type: 'string',
         default: defaultArray,
         isMultiple: true
