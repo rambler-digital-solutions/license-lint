@@ -1,5 +1,5 @@
 {
-  "name": "@rambler-digital-solutions/licenselint",
+  "name": "@rambler-tech/licenselint",
   "version": "0.0.0",
   "description": "A linter for NPM package licenses to avoid dependencies that not compatible with license of your software",
   "bin": {

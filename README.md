@@ -7,13 +7,13 @@ A linter for NPM package licenses to avoid dependencies that not compatible with
 ## Install
 
 ```sh
-npm install -D @rambler-digital-solutions/licenselint
+npm install -D @rambler-tech/licenselint
 ```
 
 or 
 
 ```sh
-yarn add -D @rambler-digital-solutions/licenselint
+yarn add -D @rambler-tech/licenselint
 ```
 
 ## Usage
