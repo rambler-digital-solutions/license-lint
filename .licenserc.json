@@ -1,14 +1,3 @@
 {
-  "summary": true,
-  "deny": [
-    "MPL.+2",
-    "EPL.+2",
-    "IPL.+1",
-    "GPL.+2",
-    "GPL.+3",
-    "AGPL.+3",
-    "LGPL.+2.1",
-    "UNKNOWN",
-    "CUSTOM"
-  ]
+  "extends": "@rambler-tech/licenselint-config"
 }

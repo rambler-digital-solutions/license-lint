@@ -36,6 +36,7 @@ export const loadOptions = async (
 
     if (extendsFileName) {
       const extendsFileDir = path.dirname(optionsFilePath)
+
       extendsOptions = await loadOptions(extendsFileName, extendsFileDir)
     }
 

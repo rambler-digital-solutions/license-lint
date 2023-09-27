@@ -43,7 +43,7 @@ const formatSummaryLines = (
     summaryLines[line.license].push(line)
   })
 
-  const output = Object.values(summaryLines)
+  return Object.values(summaryLines)
     .sort((a, b) => b.length - a.length)
     .map((line) =>
       [
@@ -54,8 +54,6 @@ const formatSummaryLines = (
       ].join('  ')
     )
     .join('\n')
-
-  return output
 }
 
 export const format = (results: LicenseResult[], options: Options): string => {
@@ -90,8 +88,8 @@ export const format = (results: LicenseResult[], options: Options): string => {
   })
 
   const formatLines = options.summary ? formatSummaryLines : formatFullLines
-
   let output = '\n'
+
   output += formatLines(successLines, maxNameWidth, maxLicenseWidth)
   output += '\n'
 
