@@ -5,7 +5,7 @@ import stringWidth from 'string-width'
 import {Options} from './options'
 import {LicenseResult} from './lint'
 
-export interface FormatLine {
+interface FormatLine {
   name: string
   nameWidth: number
   license: string
@@ -48,7 +48,7 @@ const formatSummaryLines = (
     .map((line) =>
       [
         '',
-        logSymbols['success'],
+        logSymbols.success,
         line[0].license + ' '.repeat(maxLicenseWidth - line[0].licenseWidth),
         chalk.dim(line.length)
       ].join('  ')
@@ -94,10 +94,9 @@ export const format = (results: LicenseResult[], options: Options): string => {
   output += '\n'
 
   if (errorLines.length > 0) {
-    output +=
-      '\n  ' +
-      chalk.red(pluralize(errorLines.length, 'error', 'errors')) +
-      '\n\n'
+    output += '\n'
+    output += chalk.red(pluralize(errorLines.length, 'error', 'errors'))
+    output += '\n\n'
     output += formatFullLines(
       errorLines,
       maxErrorNameWidth || maxNameWidth,

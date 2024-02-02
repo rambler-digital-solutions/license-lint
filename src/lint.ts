@@ -24,7 +24,7 @@ export const lint = async (
     start: entry,
     production,
     development,
-    // NOTE fix wrong `exclude` type
+    // fix wrong `exclude` type
     exclude: exclude.toString() as unknown as string[]
   }
 

@@ -23,11 +23,11 @@ const defaultOptionsFileName = '.licenserc.json'
 
 export const loadOptions = async (
   optionsFileName = defaultOptionsFileName,
-  optionsFileDir = process.cwd()
+  optionsFileDirectory = process.cwd()
 ): Promise<Partial<Options>> => {
   try {
     const optionsFilePath = optionsFileName.endsWith('.json')
-      ? path.resolve(optionsFileDir, optionsFileName)
+      ? path.resolve(optionsFileDirectory, optionsFileName)
       : optionsFileName
 
     const {default: options} = await import(optionsFilePath)
@@ -35,9 +35,9 @@ export const loadOptions = async (
     let extendsOptions = {}
 
     if (extendsFileName) {
-      const extendsFileDir = path.dirname(optionsFilePath)
+      const extendsFileDirectory = path.dirname(optionsFilePath)
 
-      extendsOptions = await loadOptions(extendsFileName, extendsFileDir)
+      extendsOptions = await loadOptions(extendsFileName, extendsFileDirectory)
     }
 
     const resultOptions = {...defaultOptions, ...extendsOptions, ...restOptions}

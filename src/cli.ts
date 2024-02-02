@@ -71,24 +71,24 @@ const cliOptions: Options = Object.fromEntries(
   Object.entries(cli.flags).filter(([, value]) => value !== defaultArray)
 )
 
-loadOptions(cliOptions.extends)
-  .then((baseOptions) => {
+const run = async (cliOptions: Options): Promise<void> => {
+  try {
+    const baseOptions = await loadOptions(cliOptions.extends)
     const options = {...baseOptions, ...cliOptions}
 
     debug('entry: %o', entry)
     debug('options: %o', options)
 
-    return options
-  })
-  .then((options) =>
-    lint(entry, options).then((results) => {
-      const errors = results.filter((result) => result.error)
+    const results = await lint(entry, options)
+    const errors = results.filter((result) => result.error)
 
-      console.log(format(results, options))
-      process.exit(errors.length > 0 ? 1 : 0)
-    })
-  )
-  .catch((error) => {
+    // eslint-disable-next-line no-console
+    console.log(format(results, options))
+    process.exit(errors.length > 0 ? 1 : 0)
+  } catch (error) {
     console.error(error)
     process.exit(1)
-  })
+  }
+}
+
+run(cliOptions)
